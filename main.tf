@@ -51,27 +51,34 @@ resource "aws_s3_bucket_cors_configuration" "vss" {
   depends_on = [aws_s3_bucket.vss]
 }
 
-resource "aws_s3_bucket_notification" "vss" {
-  count = var.notification_enabled ? 1 : 0
+resource "aws_s3_bucket_notification" "sqs_vss" {
+  count = length(var.notification_sqs) > 0 ? 1 : 0
   bucket = aws_s3_bucket.vss.id
 
   dynamic "queue" {
     for_each = try([var.notification_sqs],[])
 
     content {
-      queue_arn = queue.value.queue_arn
-      events = queue.value.events
-      filter_suffix = queue.value.filter_suffix
+      queue_arn = try(queue.value.queue_arn, null)
+      events = try(queue.value.events, null)
+      filter_suffix = try(queue.value.filter_suffix, null)
     }
   }
+
+  depends_on = [aws_s3_bucket.vss]
+}
+
+resource "aws_s3_bucket_notification" "lambda_vss" {
+  count = length(var.notification_lambda) > 0 ? 1 : 0
+  bucket = aws_s3_bucket.vss.id
 
   dynamic "lambda_function" {
     for_each = try([var.notification_lambda],[])
 
     content {
-      lambda_function_arn = lambda_function.value.lambda_function_arn
-      events = lambda_function.value.events
-      filter_suffix = lambda_function.value.filter_suffix
+      lambda_function_arn = try(lambda_function.value.lambda_function_arn, null)
+      events = try(lambda_function.value.events, null)
+      filter_suffix = try(lambda_function.value.filter_suffix, null)
     }
   }
 
