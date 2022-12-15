@@ -16,9 +16,9 @@ variable "accountID" {
 }
 
 variable "region" {
-  description           = "The region for the resources. By default it is us-east-1."
+  description           = "The region for the resources. By default it is eu-west-1."
   type                  = string
-  default               = "us-east-1"
+  default               = "eu-west-1"
 }
 
 variable "assumeRole" {

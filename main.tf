@@ -42,7 +42,7 @@ resource "aws_s3_bucket_policy" "vss" {
 }
 
 resource "aws_s3_bucket_versioning" "vss" {
-  count = var.versioning_enabled ? 1 | 0
+  count = var.versioning_enabled ? 1 : 0
   bucket = aws_s3_bucket.vss.id
   versioning_configuration {
     status = try(rule.value.enabled ? "Enabled" : "Suspended", "Suspended")
@@ -89,7 +89,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "vss" {
             dynamic "tags" {
               for_each = filter.value.tags
               content {
-                tags.value.key = tags.value.value
+                "${tags.value.key}" = "${tags.value.value}"
               }
             }
           }
