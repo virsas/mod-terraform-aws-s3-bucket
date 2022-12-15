@@ -13,6 +13,9 @@ output "bucket_regional_domain_name" {
 output "region" {
   value = aws_s3_bucket.vss.region
 }
+output "website_endpoint" {
+  value = try(aws_s3_bucket.vss.website_endpoint, "")
+}
 output "s3_bucket_website_domain" {
   value = try(aws_s3_bucket_website_configuration.vss[0].website_domain, "")
 }
