@@ -42,6 +42,11 @@ variable "object_lock_enabled" {
   type        = bool
   default     = false
 }
+variable "object_lock_config" {
+  description = ""
+  type        = map
+  default     = {}
+}
 variable "block_public_acls" {
   description = "PUT Bucket ACL, PUT Object ACL and PUT Object if request includes a public ACL calls will fail if the specified ACL allows public access. Defaults to true"
   type        = bool
@@ -84,7 +89,7 @@ variable "logging_prefix" {
 }
 variable "lifecycle_rules" {
   description = "Lifecycle rules. By default empty. Example of one: lifecycle_rules = [{name = \"DeleteAnyInWeek\", enabled = true, expiration_date = \"\", expiration_days = 7}]"
-  type        = list(object({ name = string, enabled = bool, abort_incomplete_multipart_in_days = number, expiration_date = string, expiration_days = number, transition_date = string, transition_days = number, filters = list(object({ object_size_greater_than = number, object_size_less_than = number, prefix = string, tags = list(object({ key = string, value = string})) })) }))
+  type        = any
   default     = []
 }
 variable "website_enabled" {

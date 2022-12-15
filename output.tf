@@ -10,9 +10,6 @@ output "bucket_domain_name" {
 output "bucket_regional_domain_name" {
   value = aws_s3_bucket.vss.bucket_regional_domain_name
 }
-output "s3_bucket_hosted_zone_id" {
-  value = aws_s3_bucket.vss.s3_bucket_hosted_zone_id
-}
 output "region" {
   value = aws_s3_bucket.vss.region
 }
