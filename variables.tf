@@ -127,3 +127,18 @@ variable "cors_rules" {
   type        = any
   default     = {}
 }
+variable "notification_enabled" {
+  description = "Enable or disable s3 notification. By default notification is disabled."
+  type        = bool
+  default     = false
+}
+variable "notification_sqs" {
+  description = "SQS configuration. Expected configuration: notification_sqs = { queue_arn = model.s3_sqs.arn, events = [\"s3:ObjectCreated:*\"], filter_suffix = \"\"}. If left blank, sqs will not be notified"
+  type        = any
+  default     = {}
+}
+variable "notification_lambda" {
+  description = "SQS configuration. Expected configuration: notification_lambda = { lambda_function_arn = model.s3_lambda.arn, events = [\"s3:ObjectCreated:*\"], filter_suffix = \"\"}. If left blank, lambda will not be notified"
+  type        = any
+  default     = {}
+}

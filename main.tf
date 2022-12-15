@@ -51,6 +51,33 @@ resource "aws_s3_bucket_cors_configuration" "vss" {
   depends_on = [aws_s3_bucket.vss]
 }
 
+resource "aws_s3_bucket_notification" "vss" {
+  count = var.notification_enabled ? 1 : 0
+  bucket = aws_s3_bucket.vss.id
+
+  dynamic "queue" {
+    for_each = try([var.notification_sqs],[])
+
+    content {
+      queue_arn = queue.value.queue_arn
+      events = queue.value.events
+      filter_suffix = queue.value.filter_suffix
+    }
+  }
+
+  dynamic "lambda_function" {
+    for_each = try([var.notification_lambda],[])
+
+    content {
+      lambda_function_arn = lambda_function.value.lambda_function_arn
+      events = lambda_function.value.events
+      filter_suffix = lambda_function.value.filter_suffix
+    }
+  }
+
+  depends_on = [aws_s3_bucket.vss]
+}
+
 resource "aws_s3_bucket_public_access_block" "vss" {
   bucket = aws_s3_bucket.vss.id
 
