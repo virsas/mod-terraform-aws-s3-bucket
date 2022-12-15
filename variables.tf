@@ -43,7 +43,7 @@ variable "object_lock_enabled" {
   default     = false
 }
 variable "object_lock_config" {
-  description = ""
+  description = "If you want to apply object lock to all newly created objects, please set the object lock configuration. E.g.: object_lock_config = { mode = \"COMPLIANCE\", days = 365 }. If this is set, all new object wont be possible to delete for 365 days."
   type        = map
   default     = {}
 }
@@ -121,4 +121,9 @@ variable "encryption_kms_key" {
   description = "If aws:kms algoright is selected, you can use your own key to encrypt files. If this value is left blank and AES256 algorithm is not configured, aws will use own s3 kms key instead."
   type        = string
   default     = null
+}
+variable "cors_rules" {
+  description = "CORS configuration. If left blank, no rules will be applied. Expected configuration. cors_rules = { allowed_methods = [\"GET\"], allowed_origins = [\"*\"] }. This is minimal required configuration if cors_rules are set. You can also configure allowed_headers and expose_headers."
+  type        = any
+  default     = {}
 }

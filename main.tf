@@ -9,6 +9,7 @@ provider "aws" {
 
 locals {
   lifecycle_rules      = try(jsondecode(var.lifecycle_rules), var.lifecycle_rules)
+  cors_rules           = try(jsondecode(var.cors_rules), var.cors_rules)
 }
 
 resource "aws_s3_bucket" "vss" {
@@ -16,8 +17,8 @@ resource "aws_s3_bucket" "vss" {
   object_lock_enabled = var.object_lock_enabled
 }
 
-resource "aws_s3_bucket_object_lock_configuration" "example" {
-  count = var.object_lock_enabled ? 1 : 0
+resource "aws_s3_bucket_object_lock_configuration" "vss" {
+  count = var.object_lock_enabled && length(var.object_lock_config) > 0 ? 1 : 0
 
   bucket = aws_s3_bucket.vss.id
 
@@ -30,6 +31,24 @@ resource "aws_s3_bucket_object_lock_configuration" "example" {
       }
     }
   }
+}
+
+resource "aws_s3_bucket_cors_configuration" "vss" {
+  count = length(local.cors_rules) > 0 ? 1 : 0
+  bucket = aws_s3_bucket.vss.id
+
+  dynamic "cors_rule" {
+    for_each = try([var.cors_rules],[])
+
+    content {
+      allowed_methods = cors_rule.value.allowed_methods
+      allowed_origins = cors_rule.value.allowed_origins
+      allowed_headers = try(cors_rule.value.allowed_headers, null)
+      expose_headers  = try(cors_rule.value.expose_headers, null)
+    }
+  }
+
+  depends_on = [aws_s3_bucket.vss]
 }
 
 resource "aws_s3_bucket_public_access_block" "vss" {
