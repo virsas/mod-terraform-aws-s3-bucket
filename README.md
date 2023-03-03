@@ -88,7 +88,7 @@ output "exampleRegionalDomain" {
 variable accountID { default = "123456789012"}
 
 module "s3_bucket_example" {
-  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.0"
+  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.2"
 
   profile = "default"
   accountID = var.accountID
@@ -116,7 +116,7 @@ module "s3_bucket_example" {
 variable accountID { default = "123456789012"}
 
 module "s3_bucket_example" {
-  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.0"
+  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.2"
 
   profile = "default"
   accountID = var.accountID
@@ -138,7 +138,7 @@ module "s3_bucket_example" {
 
 ``` terraform
 module "s3_bucket_example" {
-  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.0"
+  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.2"
 
   profile = "default"
   accountID = var.accountID
@@ -158,5 +158,4 @@ module "s3_bucket_example" {
 - bucket_domain_name
 - bucket_regional_domain_name
 - region
-- website_endpoint
 - s3_bucket_website_domain
