@@ -96,16 +96,11 @@ resource "aws_s3_bucket_public_access_block" "vss" {
   depends_on = [aws_s3_bucket.vss]
 }
 
-data "template_file" "vss" {
-  template = file("${var.policy_path}/${var.name}.json")
-  vars = {
-    arn = "${aws_s3_bucket.vss.arn}"
-  }
-}
-
 resource "aws_s3_bucket_policy" "vss" {
   bucket = aws_s3_bucket.vss.id
-  policy = data.template_file.vss.rendered
+  policy = templatefile("${var.policy_path}/${var.name}.json", {
+    arn = "${aws_s3_bucket.vss.arn}"
+  })
 
   depends_on = [aws_s3_bucket.vss]
 }
