@@ -37,7 +37,7 @@ Each bucket requires bucket policy to be defined as JSON file in ./s3/name.json 
 
 ### Simple bucket
 
-``` terraform
+```terraform
 variable accountID { default = "123456789012"}
 
 module "s3_bucket_example" {
@@ -53,7 +53,7 @@ module "s3_bucket_example" {
 
 ### Website bucket
 
-``` terraform
+```terraform
 variable accountID { default = "123456789012"}
 
 module "s3_bucket_example" {
@@ -84,11 +84,11 @@ output "exampleRegionalDomain" {
 
 ### Bucket with lifecycle
 
-``` terraform
+```terraform
 variable accountID { default = "123456789012"}
 
 module "s3_bucket_example" {
-  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.2"
+  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.3"
 
   profile = "default"
   accountID = var.accountID
@@ -112,11 +112,11 @@ module "s3_bucket_example" {
 
 ### Bucket with CORS
 
-``` terraform
+```terraform
 variable accountID { default = "123456789012"}
 
 module "s3_bucket_example" {
-  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.2"
+  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.3"
 
   profile = "default"
   accountID = var.accountID
@@ -136,9 +136,9 @@ module "s3_bucket_example" {
 
 ### Bucket in sub organization
 
-``` terraform
+```terraform
 module "s3_bucket_example" {
-  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.2"
+  source   = "git::https://github.com/virsas/mod-terraform-aws-s3-bucket.git?ref=v1.0.3"
 
   profile = "default"
   accountID = var.accountID
@@ -159,3 +159,4 @@ module "s3_bucket_example" {
 - bucket_regional_domain_name
 - region
 - s3_bucket_website_domain
+- s3_bucket_website_endpoint

@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.0.3] (2023-05-24)
+
+- Added Website Endpoint outpu
+
 ## [v1.0.2] (2023-03-03)
 
 - Updated documentation to reflect the change made in v1.0.1
